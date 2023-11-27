@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // @RestController 어노테이션을 사용하여 이 클래스가 REST 컨트롤러임을 선언합니다.
@@ -17,14 +18,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserDataEndpoint {
     // 원래대로라면 리스트를 통해 JSON에서 사용할 수 있는 형태로 변환해야 하지만, 이번 실습에서는 건너뜁니다.
+    private final List<String> userList = new ArrayList<>();
     @GetMapping("/list")
     public List<String> listUsers() {
-        throw new RuntimeException("이곳에 유저 목록을 반환하는 코드를 작성하십시오.");
+        return userList;
     }
 
     // 원래대로라면 리스트를 통해 JSON에서 사용할 수 있는 형태로 변환해야 하지만, 이번 실습에서는 건너뜁니다.
     @PostMapping("/remove")
-    public ResponseEntity<String> removeUser() {
-        throw new RuntimeException("이곳에 유저를 삭제하는 코드를 작성하십시오.");
+    public ResponseEntity<String> removeUser(String userId) {
+        // 여기에 유저를 실제로 삭제하는 로직을 구현해야 합니다.
+        // userId를 받아서 userList에서 해당 유저를 삭제하는 등의 로직이 필요합니다.
+        boolean removed = userList.remove(userId);
+        if (removed) {
+            return ResponseEntity.ok("User removed successfully");
+        } else {
+            return ResponseEntity.badRequest().body("User not found");
+        }
     }
+
+
 }
